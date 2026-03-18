@@ -58,3 +58,4 @@ homeschool.db
 *.njsproj
 *.sln
 *.sw?
+scripts/
