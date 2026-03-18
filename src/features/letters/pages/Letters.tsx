@@ -14,8 +14,22 @@ const LETTERS_DATA = [
   { id: 'H', letter: 'h', word: 'Hipopótamo', emoji: '🦛', color: 'bg-teal-400', shadow: 'shadow-teal-500' },
   { id: 'I', letter: 'i', word: 'Igreja', emoji: '⛪', color: 'bg-indigo-400', shadow: 'shadow-indigo-500' },
   { id: 'J', letter: 'j', word: 'Jacaré', emoji: '🐊', color: 'bg-lime-400', shadow: 'shadow-lime-500' },
+  { id: 'K', letter: 'k', word: 'Kiwi', emoji: '🥝', color: 'bg-green-500', shadow: 'shadow-green-600' },
   { id: 'L', letter: 'l', word: 'Leão', emoji: '🦁', color: 'bg-amber-400', shadow: 'shadow-amber-500' },
   { id: 'M', letter: 'm', word: 'Macaco', emoji: '🐵', color: 'bg-cyan-400', shadow: 'shadow-cyan-500' },
+  { id: 'N', letter: 'n', word: 'Navio', emoji: '🚢', color: 'bg-blue-500', shadow: 'shadow-blue-600' },
+  { id: 'O', letter: 'o', word: 'Ovo', emoji: '🥚', color: 'bg-orange-300', shadow: 'shadow-orange-400' },
+  { id: 'P', letter: 'p', word: 'Pato', emoji: '🦆', color: 'bg-yellow-500', shadow: 'shadow-yellow-600' },
+  { id: 'Q', letter: 'q', word: 'Queijo', emoji: '🧀', color: 'bg-yellow-300', shadow: 'shadow-yellow-400' },
+  { id: 'R', letter: 'r', word: 'Rato', emoji: '🐭', color: 'bg-gray-400', shadow: 'shadow-gray-500' },
+  { id: 'S', letter: 's', word: 'Sapo', emoji: '🐸', color: 'bg-green-600', shadow: 'shadow-green-700' },
+  { id: 'T', letter: 't', word: 'Trem', emoji: '🚂', color: 'bg-red-500', shadow: 'shadow-red-600' },
+  { id: 'U', letter: 'u', word: 'Uva', emoji: '🍇', color: 'bg-purple-500', shadow: 'shadow-purple-600' },
+  { id: 'V', letter: 'v', word: 'Vaca', emoji: '🐮', color: 'bg-stone-400', shadow: 'shadow-stone-500' },
+  { id: 'W', letter: 'w', word: 'Wafer', emoji: '🧇', color: 'bg-amber-600', shadow: 'shadow-amber-700' },
+  { id: 'X', letter: 'x', word: 'Xícara', emoji: '☕', color: 'bg-rose-400', shadow: 'shadow-rose-500' },
+  { id: 'Y', letter: 'y', word: 'Yoga', emoji: '🧘', color: 'bg-teal-500', shadow: 'shadow-teal-600' },
+  { id: 'Z', letter: 'z', word: 'Zebra', emoji: '🦓', color: 'bg-zinc-500', shadow: 'shadow-zinc-600' },
 ];
 
 export default function Letters() {
@@ -114,7 +128,7 @@ export default function Letters() {
 
       {/* Grid */}
       <div className="flex-1 px-8 pb-12">
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
           {LETTERS_DATA.map((item) => (
             <motion.div
               key={item.id}
@@ -123,8 +137,11 @@ export default function Letters() {
               onClick={() => handleLetterClick(item)}
               className={`${item.color} ${item.shadow} shadow-lg rounded-[2rem] aspect-[4/5] flex flex-col items-center justify-center cursor-pointer border-4 border-white/40 overflow-hidden relative group`}
             >
-              <span className="text-7xl font-black text-white uppercase drop-shadow-md mb-2">{item.letter}</span>
-              <span className="text-6xl group-hover:scale-110 transition-transform">{item.emoji}</span>
+              <div className="flex flex-col items-center gap-1 mt-2">
+                <span className="text-4xl xl:text-5xl font-black text-white drop-shadow-md tracking-widest">{item.id} {item.letter}</span>
+                <span className="text-3xl xl:text-4xl font-cursive text-white/90 drop-shadow-sm tracking-widest">{item.id} {item.letter}</span>
+              </div>
+              <span className="text-5xl xl:text-6xl group-hover:scale-110 transition-transform mb-2">{item.emoji}</span>
             </motion.div>
           ))}
         </div>
@@ -159,9 +176,14 @@ export default function Letters() {
                  initial={{ scale: 0 }}
                  animate={{ scale: 1, rotate: 360 }}
                  transition={{ delay: 0.2, type: 'spring', duration: 0.8 }}
-                 className="text-[12rem] font-black text-white leading-none drop-shadow-xl"
+                 className="flex flex-col items-center text-white drop-shadow-xl"
               >
-                {activeLetter.id}
+                <div className="text-[7rem] font-black leading-none mb-4 tracking-widest">
+                  {activeLetter.id} {activeLetter.letter}
+                </div>
+                <div className="text-[6rem] font-cursive leading-none text-white/90 tracking-widest">
+                  {activeLetter.id} {activeLetter.letter}
+                </div>
               </motion.div>
               
               <div className="flex flex-col items-center mt-8 bg-white/20 p-6 rounded-3xl w-full">

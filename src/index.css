@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
+  .font-cursive {
+    font-family: 'Dancing Script', cursive;
+  }
   .bounce-on-hover {
     transition: transform 200ms ease-out;
   }

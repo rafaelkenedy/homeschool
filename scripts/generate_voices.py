@@ -21,8 +21,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # Define Vocabulary
 vocabulary = [
-    ##{"id": "I", "text": "Í de Igreja"},
-    #{"id": "G", "text": "Gê de gaato"},
+    {"id": "R", "text": "Érri de Rato"},
 ]
 
 # Initialize XTTS-v2
