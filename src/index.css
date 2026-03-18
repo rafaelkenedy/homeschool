@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bounce-on-hover {
+    transition: transform 200ms ease-out;
+  }
+  .bounce-on-hover:hover {
+    transform: scale(1.05);
+  }
+}
+
+
