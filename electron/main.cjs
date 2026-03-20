@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -15,29 +16,65 @@ function createWindow() {
   // Check if we are running in dev mode
   const devServerUrl = process.env.VITE_DEV_SERVER_URL;
   if (devServerUrl) {
-    win.loadURL(devServerUrl);
-    // win.webContents.openDevTools();
+    win.loadURL(devServerUrl).catch(err => {
+      console.error('[main] Failed to load URL:', err);
+    });
+    win.webContents.openDevTools({ mode: 'detach' });
   } else {
-    win.loadFile(path.join(__dirname, '../dist/index.html'));
+    const indexPath = path.join(__dirname, '../dist/index.html');
+    win.loadFile(indexPath).catch(err => {
+      console.error('[main] Failed to load file:', err);
+    });
+    win.webContents.openDevTools({ mode: 'detach' });
   }
+
+  win.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL) => {
+    console.error('[did-fail-load]', { errorCode, errorDescription, validatedURL });
+  });
+
+  win.webContents.on('render-process-gone', (_event, details) => {
+    console.error('[render-process-gone]', details);
+  });
+
+  win.webContents.on('console-message', (_event, level, message, line, sourceId) => {
+    console.log(`[renderer:${level}] ${sourceId}:${line} ${message}`);
+  });
 }
 
-const { initDb, setupIpcHandlers } = require('./database.cjs');
+// Wrap in try-catch to catch top-level require errors
+try {
+  const { initDb, setupIpcHandlers } = require('./database.cjs');
 
-app.whenReady().then(() => {
-  initDb();
-  setupIpcHandlers();
-  createWindow();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+  app.whenReady().then(() => {
+    try {
+      initDb();
+      setupIpcHandlers();
       createWindow();
+    } catch (err) {
+      console.error('[main] Error during initialization:', err);
+      dialog.showErrorBox('Initialization Error', err.message);
     }
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+      }
+    });
+  }).catch(err => {
+    console.error('[main] Error waiting for app ready:', err);
   });
-});
+
+} catch (err) {
+  console.error('[main] Critical error in database module:', err);
+  app.whenReady().then(() => {
+    dialog.showErrorBox('Critical Error', 'Failed to load database module: ' + err.message);
+    createWindow(); // Still try to create window to show something
+  });
+}
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
+

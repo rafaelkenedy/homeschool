@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 @layer utilities {
   .font-cursive {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Cedarville Cursive', cursive;
   }
   .bounce-on-hover {
     transition: transform 200ms ease-out;

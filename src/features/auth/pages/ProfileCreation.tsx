@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../../../app/store';
@@ -8,7 +8,7 @@ const AGES = [6, 7, 8, 9];
 
 export default function ProfileCreation() {
   const navigate = useNavigate();
-  const setCurrentUser = useAppStore((state) => state.setCurrentUser);
+  const { setCurrentUser } = useAppStore();
 
   const [name, setName] = useState('');
   const [age, setAge] = useState<number | null>(null);
